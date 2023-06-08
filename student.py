@@ -1,0 +1,15 @@
+import asyncioasync def countdown():
+    print('Пять!')    await asyncio.sleep(1)
+    print('Четыре!')    await asyncio.sleep(1)
+    print('Три!')    await asyncio.sleep(1)
+    print('Два')    await asyncio.sleep(1)
+    print('Один!')
+async def countdown2():     print('Десять!')
+     await asyncio.sleep(1)     print('Девять!')
+     await asyncio.sleep(1)     print('Восемь!')
+     await asyncio.sleep(1)     print('Семь')
+     await asyncio.sleep(1)     print('Шесть!')
+async def zxc():
+    asyncio.run(countdown())    await asyncio.sleep(1)
+    asyncio.run(countdown2())
+asyncio.run(zxc())
