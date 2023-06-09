@@ -44,8 +44,8 @@ async def process_age(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state = "echo")
 async def echo(message: Message):
+    tasks = []
     for user in connected_users:
-        tasks = []
         if message.from_user.id == user:
             continue
         tasks.append(
