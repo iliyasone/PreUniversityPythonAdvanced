@@ -6,17 +6,18 @@ from aiogram.types import Message
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 
-
 # Initialize bot and dispatcher
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
+connected_users = []
 
 @dp.message_handler(commands=['start', 'help'], state='*')
 async def send_welcome(message: types.Message, state: FSMContext):
     """
     This handler will be called when user sends `/start` or `/help` command
     """
+    connected_users.append(message.from_user.id)
     await message.answer("Hi!\nI'm EchoBot!\nPowered by aiogram.\nPlease, say your name")
     await state.set_state("q1")
 
@@ -36,7 +37,8 @@ async def process_age(message: types.Message, state: FSMContext):
         await state.set_state("echo")
         await message.answer("Now I am echo-bot!")
     else:
-        await message.answer("This is not a number, try another time")
+        data = await state.get_data()
+        await message.answer(f"This is not a number, try another time {data['name']}")
 @dp.message_handler(state = "echo")
 async def echo(message: Message):
     await message.answer(message.text)
