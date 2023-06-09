@@ -17,7 +17,6 @@ async def send_welcome(message: types.Message, state: FSMContext):
     """
     This handler will be called when user sends `/start` or `/help` command
     """
-    connected_users.append(message.from_user.id)
     await message.answer("Hi!\nI'm EchoBot!\nPowered by aiogram.\nPlease, say your name")
     await state.set_state("q1")
 
@@ -36,12 +35,18 @@ async def process_age(message: types.Message, state: FSMContext):
         await state.update_data({"age" : int(age)})
         await state.set_state("echo")
         await message.answer("Now I am echo-bot!")
+        connected_users.append(message.from_user.id)
     else:
         data = await state.get_data()
         await message.answer(f"This is not a number, try another time {data['name']}")
+
+
 @dp.message_handler(state = "echo")
 async def echo(message: Message):
-    await message.answer(message.text)
+    for user in connected_users:
+        if message.from_user.id == user:
+            continue
+        await bot.send_message(user, message.text)
 
 
 if __name__ == '__main__':
