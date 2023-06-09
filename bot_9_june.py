@@ -51,7 +51,7 @@ async def echo(message: Message):
         tasks.append(
             bot.send_message(user, f'@{message.from_user.username} : {message.text}')
             )
-        await asyncio.gather(*tasks)
+    await asyncio.gather(*tasks)
 
 
 if __name__ == '__main__':
