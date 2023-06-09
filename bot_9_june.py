@@ -1,3 +1,4 @@
+import asyncio
 from env import TOKEN
 
 from aiogram import Bot, Dispatcher, executor, types
@@ -44,9 +45,13 @@ async def process_age(message: types.Message, state: FSMContext):
 @dp.message_handler(state = "echo")
 async def echo(message: Message):
     for user in connected_users:
+        tasks = []
         if message.from_user.id == user:
             continue
-        await bot.send_message(user, message.text)
+        tasks.append(
+            bot.send_message(user, f'@{message.from_user.username} : {message.text}')
+            )
+        asyncio.garher(*tasks)
 
 
 if __name__ == '__main__':
