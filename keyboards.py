@@ -1,12 +1,18 @@
 from aiogram.types import \
     KeyboardButton, \
     ReplyKeyboardMarkup, \
-    ReplyKeyboardRemove
-    
-b1 = KeyboardButton("Найти собеседника")
-b2 = KeyboardButton("Больше не хочу никого искать")
-b3 = KeyboardButton("🙋‍♂️")
+    ReplyKeyboardRemove, \
+    InlineKeyboardMarkup, \
+    InlineKeyboardButton
+       
+i1 = InlineKeyboardButton('👍')
+i2 = InlineKeyboardButton('👎')        
 
+inlineKeyboard = InlineKeyboardMarkup().insert(i1).insert(i2)       
+        
+b1 = KeyboardButton("Поделиться номером", request_location=True)
+b2 = KeyboardButton("Больше не хочу никого искать", request_contact=True)
+b3 = KeyboardButton("🙋‍♂️")
 keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
 keyboard.add(b1).add(b2).add(b3)
 
