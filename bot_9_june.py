@@ -41,7 +41,7 @@ async def process_age(message: types.Message, state: FSMContext):
         await state.update_data({"age" : int(age)})
         await state.set_state("echo")
         await message.answer("Now I am echo-bot!", 
-                             reply_markup=ReplyKeyboardRemove())
+                             reply_markup=inlineKeyboard)
         connected_users.append(message.from_user.id)
         await bot.send_chat_action(message.from_user.id, types.ChatActions.TYPING)
     else:

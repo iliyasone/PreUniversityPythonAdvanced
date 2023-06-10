@@ -5,8 +5,8 @@ from aiogram.types import \
     InlineKeyboardMarkup, \
     InlineKeyboardButton
        
-i1 = InlineKeyboardButton('👍')
-i2 = InlineKeyboardButton('👎')        
+i1 = InlineKeyboardButton('👍', callback_data='i1')
+i2 = InlineKeyboardButton('👎', callback_data='i2')        
 
 inlineKeyboard = InlineKeyboardMarkup().insert(i1).insert(i2)       
         
