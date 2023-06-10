@@ -7,6 +7,8 @@ from aiogram.types import Message
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 
+import logging
+
 from keyboards import *
 
 
@@ -15,6 +17,9 @@ bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
 connected_users = []
+
+logging.basicConfig(level=logging.INFO)
+
 
 @dp.message_handler(commands=['start', 'help'], state='*')
 async def send_welcome(message: types.Message, state: FSMContext):
@@ -61,5 +66,18 @@ async def echo(message: Message):
     await asyncio.gather(*tasks)
 
 
+
+@dp.callback_query_handler(lambda callback: callback.data == 'i2')
+async def process_callback_button(callback_query: types.CallbackQuery):
+    await bot.answer_callback_query(callback_query.id, 'Callback Answered!')
+    await bot.send_message(callback_query.from_user.id, 'Палец вниз')
+    
+
+@dp.callback_query_handler(lambda callback: callback.data == 'i1')
+async def process_callback_button(callback_query: types.CallbackQuery):
+    await bot.answer_callback_query(callback_query.id, 'Callback Answered!')
+    await bot.send_message(callback_query.from_user.id, 'Палец вверх')
+    
+    
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
