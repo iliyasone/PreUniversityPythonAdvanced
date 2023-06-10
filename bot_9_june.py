@@ -37,6 +37,7 @@ async def process_age(message: types.Message, state: FSMContext):
         await state.set_state("echo")
         await message.answer("Now I am echo-bot!")
         connected_users.append(message.from_user.id)
+        await bot.send_chat_action(message.from_user.id, types.ChatActions.TYPING)
     else:
         data = await state.get_data()
         await message.answer(f"This is not a number, try another time {data['name']}")
