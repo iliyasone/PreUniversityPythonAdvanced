@@ -8,6 +8,8 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 
 from keyboards import keyboard
+
+
 # Initialize bot and dispatcher
 bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
@@ -19,7 +21,9 @@ async def send_welcome(message: types.Message, state: FSMContext):
     """
     This handler will be called when user sends `/start` or `/help` command
     """
-    await message.answer("Hi!\nI'm EchoBot!\nPowered by aiogram.\nPlease, say your name")
+    await message.answer("Hi!\nI'm EchoBot!\nPowered by aiogram.\nPlease, "
+                         "say your name",
+                         reply_markup=keyboard)
     await state.set_state("q1")
 
 
