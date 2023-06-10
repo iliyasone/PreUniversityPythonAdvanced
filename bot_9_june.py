@@ -7,7 +7,7 @@ from aiogram.types import Message
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 
-from keyboards import keyboard
+from keyboards import *
 
 
 # Initialize bot and dispatcher
@@ -23,7 +23,7 @@ async def send_welcome(message: types.Message, state: FSMContext):
     """
     await message.answer("Hi!\nI'm EchoBot!\nPowered by aiogram.\nPlease, "
                          "say your name",
-                         reply_markup=keyboard)
+                         reply_markup=keyboard2)
     await state.set_state("q1")
 
 
@@ -40,7 +40,8 @@ async def process_age(message: types.Message, state: FSMContext):
     if age.isdigit():
         await state.update_data({"age" : int(age)})
         await state.set_state("echo")
-        await message.answer("Now I am echo-bot!")
+        await message.answer("Now I am echo-bot!", 
+                             reply_markup=ReplyKeyboardRemove())
         connected_users.append(message.from_user.id)
         await bot.send_chat_action(message.from_user.id, types.ChatActions.TYPING)
     else:

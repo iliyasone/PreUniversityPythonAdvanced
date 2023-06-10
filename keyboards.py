@@ -9,3 +9,7 @@ b3 = KeyboardButton("🙋‍♂️")
 
 keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
 keyboard.add(b1).add(b2).add(b3)
+
+
+keyboard2 = ReplyKeyboardMarkup(one_time_keyboard=True)
+keyboard2.insert(b1).insert(b2).insert(b3)
