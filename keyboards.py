@@ -5,10 +5,12 @@ from aiogram.types import \
     InlineKeyboardMarkup, \
     InlineKeyboardButton
        
-i1 = InlineKeyboardButton('👍', callback_data='i1')
-i2 = InlineKeyboardButton('👎', callback_data='i2')        
+       
+def create_keyboard(a: int = 0, b: int = 0):
+    i1 = InlineKeyboardButton(f'{a} 👍', callback_data='i1')
+    i2 = InlineKeyboardButton(f'{b} 👎', callback_data='i2')        
 
-inlineKeyboard = InlineKeyboardMarkup().insert(i1).insert(i2)       
+    return InlineKeyboardMarkup().insert(i1).insert(i2)       
         
 b1 = KeyboardButton("Поделиться номером", request_location=True)
 b2 = KeyboardButton("Больше не хочу никого искать", request_contact=True)

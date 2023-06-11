@@ -8,7 +8,7 @@ from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 
 import logging
-
+import token
 from keyboards import *
 
 
@@ -26,9 +26,10 @@ async def send_welcome(message: types.Message, state: FSMContext):
     """
     This handler will be called when user sends `/start` or `/help` command
     """
-    await message.answer("Hi!\nI'm EchoBot!\nPowered by aiogram.\nPlease, "
+    message = await message.answer("Hi!\nI'm EchoBot!\nPowered by aiogram.\nPlease, "
                          "say your name",
                          reply_markup=keyboard2)
+    
     await state.set_state("q1")
 
 
@@ -46,7 +47,7 @@ async def process_age(message: types.Message, state: FSMContext):
         await state.update_data({"age" : int(age)})
         await state.set_state("echo")
         await message.answer("Now I am echo-bot!", 
-                             reply_markup=inlineKeyboard)
+                             reply_markup=create_keyboard(0,0))
         connected_users.append(message.from_user.id)
         await bot.send_chat_action(message.from_user.id, types.ChatActions.TYPING)
     else:
@@ -61,22 +62,43 @@ async def echo(message: Message):
         if message.from_user.id == user:
             continue
         tasks.append(
-            bot.send_message(user, f'@{message.from_user.username} : {message.text}')
+            message.forward(user, drop_author=True)
             )
+        types.MediaGroup()
+        
     await asyncio.gather(*tasks)
 
 
-
-@dp.callback_query_handler(lambda callback: callback.data == 'i2')
+a = b = 0
+@dp.callback_query_handler(lambda c: c.data == 'i2')
 async def process_callback_button(callback_query: types.CallbackQuery):
+    global a, b
+    b += 1
+    
     await bot.answer_callback_query(callback_query.id, 'Callback Answered!')
-    await bot.send_message(callback_query.from_user.id, 'Палец вниз')
+    #await bot.send_message(callback_query.from_user.id, 'Палец вниз')
+    
+    await bot.edit_message_reply_markup(callback_query.from_user.id, 
+                                        callback_query.message.message_id,
+                                        reply_markup=create_keyboard(a, b))
+    
     
 
-@dp.callback_query_handler(lambda callback: callback.data == 'i1')
+    
+
+@dp.callback_query_handler(lambda c: c.data == 'i1')
 async def process_callback_button(callback_query: types.CallbackQuery):
+    global a, b
+    a += 1
+    
     await bot.answer_callback_query(callback_query.id, 'Callback Answered!')
-    await bot.send_message(callback_query.from_user.id, 'Палец вверх')
+    #await bot.send_message(callback_query.from_user.id, 'Палец вверх')
+    
+    await bot.edit_message_reply_markup(callback_query.from_user.id, 
+                                        callback_query.message.message_id,
+                                        reply_markup=create_keyboard(a, b))
+    
+    
     
     
 if __name__ == '__main__':
