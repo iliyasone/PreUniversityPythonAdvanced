@@ -37,19 +37,28 @@ waiting_users: set[int] = set()
 @dp.message_handler(commands=['find'],state='find')
 async def find_process(message: types.Message, state: FSMContext):
     await message.answer("Поиск собеседника...")
-    waiting_users.add(message.from_user.id)
+    current_user = message.from_user.id
+    waiting_users.add(current_user)
     await message.answer(waiting_users)
     
     if len(waiting_users) >= 2:
         for another_user in waiting_users:
-            if another_user == message.from_user.id:
+            if another_user == current_user:
                 continue
             else:
                 break
         another_user
+        
+        another_user_state = dp.current_state(chat=another_user, user=another_user)
+
         await state.set_state("chatting")
+        await another_user_state.set_state("chatting")
         
+        waiting_users.remove(current_user)
+        waiting_users.remove(another_user)            
         
+        await bot.send_message(current_user, "Найден собеседник! Начинайте общаться")
+        await bot.send_message(another_user, "Найден собеседник! Начинайте общаться")
     
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
