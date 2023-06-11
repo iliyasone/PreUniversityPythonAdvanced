@@ -63,5 +63,13 @@ async def find_process(message: types.Message, state: FSMContext):
         await bot.send_message(current_user, "Найден собеседник! Начинайте общаться")
         await bot.send_message(another_user, "Найден собеседник! Начинайте общаться")
     
+    
+@dp.message_handler(state='chatting')
+async def chatting_proc(message: types.Message, state: FSMContext):
+    another_user_data = await state.get_data()
+    another_user = another_user_data['target']
+    bot.send_message(another_user, message.text)
+
+
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
