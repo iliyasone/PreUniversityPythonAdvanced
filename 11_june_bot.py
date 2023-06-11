@@ -47,15 +47,18 @@ async def find_process(message: types.Message, state: FSMContext):
                 continue
             else:
                 break
-        another_user
+        waiting_users.remove(current_user)
+        waiting_users.remove(another_user)            
+        
         
         another_user_state = dp.current_state(chat=another_user, user=another_user)
 
         await state.set_state("chatting")
         await another_user_state.set_state("chatting")
         
-        waiting_users.remove(current_user)
-        waiting_users.remove(another_user)            
+        await state.update_data({"target" : another_user})
+        await another_user_state.update_data({"target" : current_user})
+        
         
         await bot.send_message(current_user, "Найден собеседник! Начинайте общаться")
         await bot.send_message(another_user, "Найден собеседник! Начинайте общаться")
