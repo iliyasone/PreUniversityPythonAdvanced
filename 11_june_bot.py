@@ -17,7 +17,7 @@ dp = Dispatcher(bot, storage=MemoryStorage())
 logging.basicConfig(level=logging.INFO)
 
 
-@dp.message_handler(commands=['start'])
+@dp.message_handler(commands=['start'], state='*')
 async def first_process(message: types.Message, state: FSMContext):
     await message.answer("Добро пожаловать в анонимный чат бот! Введите свой возраст")
     await state.set_state("age")
@@ -26,9 +26,19 @@ async def first_process(message: types.Message, state: FSMContext):
 async def age_process(message: types.Message, state: FSMContext):
     text = message.text
     if text.isdigit():
-        await state.update_data(age = int(text))
+        await state.update_data({'age' : int(text)})
+        await message.answer('Отлично. Нажмите /find чтобы найти собеседника')
+        await state.set_state('find')
     else:
-        message.reply("Вы ввели не число. Повторите попытку")
+        await message.reply("Вы ввели не число. Повторите попытку")
+        
+waiting_users = []
+
+@dp.message_handler(commands=['find'],state='find')
+async def find_process(message: types.Message, state: FSMContext):
+    await message.answer("Поиск собеседника...")
+    waiting_users.append(message.from_user.id)
+    await message.answer(waiting_users)
     
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
