@@ -32,13 +32,24 @@ async def age_process(message: types.Message, state: FSMContext):
     else:
         await message.reply("Вы ввели не число. Повторите попытку")
         
-waiting_users = []
+waiting_users: set[int] = set()
 
 @dp.message_handler(commands=['find'],state='find')
 async def find_process(message: types.Message, state: FSMContext):
     await message.answer("Поиск собеседника...")
-    waiting_users.append(message.from_user.id)
+    waiting_users.add(message.from_user.id)
     await message.answer(waiting_users)
+    
+    if len(waiting_users) >= 2:
+        for another_user in waiting_users:
+            if another_user == message.from_user.id:
+                continue
+            else:
+                break
+        another_user
+        await state.set_state("chatting")
+        
+        
     
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
