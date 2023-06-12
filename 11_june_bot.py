@@ -2,7 +2,7 @@ from env import TOKEN
 import random
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import Message
-
+import langdetect
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 
@@ -74,3 +74,5 @@ async def chatting_proc(message: types.Message, state: FSMContext):
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
+    
+    
