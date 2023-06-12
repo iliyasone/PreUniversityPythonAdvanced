@@ -6,7 +6,7 @@ from aiogram.types import Message
 
 # Configure logginglogging.basicConfig(level=logging.INFO)
 
-from env import TOKEN
+from config import TOKEN
 
 # Initialize bot and dispatcher
 bot = Bot(token=TOKEN)

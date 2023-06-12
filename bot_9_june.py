@@ -1,5 +1,5 @@
 import asyncio
-from env import TOKEN
+from config import TOKEN
 
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import Message

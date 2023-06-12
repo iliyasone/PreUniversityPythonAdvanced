@@ -1,6 +1,6 @@
 import openai
 
-from env import GPT_TOKEN
+from config import GPT_TOKEN
 openai.api_key = GPT_TOKEN
 
 response = openai.ChatCompletion.create(
