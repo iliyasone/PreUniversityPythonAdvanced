@@ -1,3 +1,4 @@
+from __future__ import annotations
 #from config import TOKEN
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types import Message
@@ -6,6 +7,9 @@ from aiogram.dispatcher import FSMContext
 
 import logging
 from keyboards import *
+
+
+
 
 
 # Initialize bot and dispatcher
