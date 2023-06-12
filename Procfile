@@ -1,1 +1,1 @@
-worker: python 11_june_bot.py
+worker: python main.py
