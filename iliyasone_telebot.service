@@ -8,7 +8,7 @@ Group=iliyasone
 
 WorkingDirectory=/home/iliyasone/PreUniversityPythonAdvanced/
 Environment="PYTHONPATH=/home/iliyasone/PreUniversityPythonAdvanced/"
-ExecStart=/home/iliyasone/PreUniversityPythonAdvanced/.venv/bin/python /home/iliyasone/PreUniversityPythonAdvanced/main.py
+ExecStart=/home/iliyasone/PreUniversityPythonAdvanced/.venv/bin/python /home/iliyasone/PreUniversityPythonAdvanced/main_2.py
 
 [Install]
 WantedBy=multi-user.target
