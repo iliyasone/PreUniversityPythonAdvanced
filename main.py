@@ -6,15 +6,15 @@ from aiogram.types import Message
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import FSMContext
 
+from env import TOKEN
+
 import logging
 from keyboards import *
 
 
 
-
-
 # Initialize bot and dispatcher
-bot = Bot(token= "6145666899:AAGOGm8anLXoldGuUfcxrNBoKjIF8u4gJxI")
+bot = Bot(token=TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 
 logging.basicConfig(level=logging.INFO)
